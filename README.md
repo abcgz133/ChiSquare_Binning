@@ -1,5 +1,4 @@
 ![avatar](./graphics/ChiMerge_Methodology.png)
-
 # Section 1 Preface    
 This model predicts the default probability of the credit card applicant samples by using Chi-Square Binning with Logistic Regression Algorithm. Furthermore the system then scores the applicant samples bases on their probability.
 
@@ -44,13 +43,20 @@ Time slicing according the number of days between the login date and the loan di
 Similarly, time slicing the number of days between the information updated date and the loan disbursement date for data Part3, and calculating the number and frequency.
   
 # Section 3 Data Wrangling 
-Check the outlier of categorical feature and numerical feature  
+## 3.1 Check the outlier of categorical feature and numerical feature  
 This step is mainly about data filling and checking the concentration ratio of data.  
 (1)Check concentration ratio. Check the proportion of the maximum value in each feature. If the data concentration ratio is greater than 90% and there is no significant difference (i.e. (minority value bad sample rate/maximum value bad sample rate)<=10). This indicates excessive concentration rate. We need to cancel this feature.  
 (2) Check for missing values. For categorical or numerical features, if more than 80% are missing, delete them.  
 (3) If the missing value is less than 80%, the category feature will be assigned a value of -1, and the numerical feature will be assigned a random non missing value in this column.  
 
-  
+## 3.2 Check monotonicity(detail at Section 4.4)
+
+## 3.3 Check whether each bin contains both good and bad samples(detail at Section 4.3)
+
+## 3.2 Single-feature and multi-features analysis(detail at Section 4.6)
+
+
+
 
 # Section 4 Modeling
 ## 4.1 Basic processing flow
@@ -131,10 +137,40 @@ If YES, then append this tested feature to a list named 'select_var’, if No, t
 
 The features in this list are the final features that can be finally to fit the logistic regression model. The training samples are then trained to fit the logistic regression model.
 
-The results are as follows: 
-LR.summary2() = {Summary}                                  Results: 
- Logit  ================================================================================  
- Model:                    Logit                Pseudo R-squared:     0.091  Dependent feature:       target               AIC:                  14335.7179  Date:                     2020-07-16 16:14     BIC:                  14493.5880  No. Observations:         30000                Log-Likelihood:       -7148.9  Df Model:                 18                   LL-Null:              -7860.2  Df Residuals:             29981                LLR p-value:          1.8512e-291  Converged:                1.0000               Scale:                1.0000  No. Iterations:           8.0000  --------------------------------------------------------------------------------                                  Coef.  Std.Err.     z     P>|z|   [0.025  0.975]  --------------------------------------------------------------------------------  ThirdParty_Info_Period2_6_WOE  -0.3344   0.0846   -3.9548 0.0001 -0.5001 -0.1687  ThirdParty_Info_Period6_6_WOE  -0.1548   0.0826   -1.8738 0.0610 -0.3166  0.0071  ThirdParty_Info_Period5_6_WOE  -0.1585   0.0808   -1.9607 0.0499 -0.3169 -0.0001  UserInfo_14_encoding_WOE       -0.8331   0.0699  -11.9206 0.0000 -0.9701 -0.6961  ThirdParty_Info_Period1_15_WOE -0.3259   0.0849   -3.8387 0.0001 -0.4923 -0.1595  ThirdParty_Info_Period3_15_WOE -0.1573   0.0905   -1.7391 0.0820 -0.3346  0.0200  ThirdParty_Info_Period6_1_WOE  -0.7457   0.0839   -8.8903 0.0000 -0.9102 -0.5813  UserInfo_16_encoding_WOE       -0.8412   0.1008   -8.3429 0.0000 -1.0388 -0.6436  WeblogInfo_4_WOE               -0.5158   0.0892   -5.7820 0.0000 -0.6906 -0.3409  ThirdParty_Info_Period2_8_WOE  -0.4911   0.0968   -5.0707 0.0000 -0.6809 -0.3012  UserInfo_7_encoding_WOE        -0.9457   0.0908  -10.4125 0.0000 -1.1237 -0.7677  WeblogInfo_20_encoding_WOE     -0.7111   0.0891   -7.9834 0.0000 -0.8857 -0.5366  UserInfo_17_WOE                -0.8104   0.1203   -6.7389 0.0000 -1.0461 -0.5747  ThirdParty_Info_Period1_10_WOE -0.8455   0.1328   -6.3677 0.0000 -1.1057 -0.5852  ThirdParty_Info_Period2_10_WOE -0.4202   0.1387   -3.0296 0.0024 -0.6921 -0.1484  WeblogInfo_2_encoding_WOE      -0.5756   0.1175   -4.9003 0.0000 -0.8059 -0.3454  LogInfo1_30_avg_count_WOE      -0.4488   0.1350   -3.3246 0.0009 -0.7133 -0.1842  UserInfo_12_WOE                -0.5003   0.1724   -2.9028 0.0037 -0.8381 -0.1625  intercept                      -2.5354   0.0241 -105.0176 0.0000 -2.5828 -2.4881
+The results are as follows:   
+LR.summary2() = {Summary}                                  \
+Results: 
+ Logit  ====================================================  
+ Model:                    Logit                Pseudo R-squared:     0.091  \
+ Dependent feature:       target                AIC:                  14335.7179  \
+ Date:                     2020-07-16 16:14     BIC:                  14493.5880  \
+ No. Observations:         30000                Log-Likelihood:       -7148.9  \
+ Df Model:                 18                   LL-Null:              -7860.2  \
+ Df Residuals:             29981                LLR p-value:          1.8512e-291  \
+ Converged:                1.0000               Scale:                1.0000  \
+ No. Iterations:           8.0000  \
+ --------------------------------------------------------------------------------\
+					Coef.	Std.Err.	z			P>|z|		[0.025  0.975]  \
+ --------------------------------------------------------------------------------\
+ ThirdParty_Info_Period2_6_WOE  -0.3344   0.0846   -3.9548 0.0001 -0.5001 -0.1687  \
+ ThirdParty_Info_Period6_6_WOE  -0.1548   0.0826   -1.8738 0.0610 -0.3166  0.0071  \
+ ThirdParty_Info_Period5_6_WOE  -0.1585   0.0808   -1.9607 0.0499 -0.3169 -0.0001  \
+ UserInfo_14_encoding_WOE       -0.8331   0.0699  -11.9206 0.0000 -0.9701 -0.6961  \
+ ThirdParty_Info_Period1_15_WOE -0.3259   0.0849   -3.8387 0.0001 -0.4923 -0.1595  \
+ ThirdParty_Info_Period3_15_WOE -0.1573   0.0905   -1.7391 0.0820 -0.3346  0.0200  \
+ ThirdParty_Info_Period6_1_WOE  -0.7457   0.0839   -8.8903 0.0000 -0.9102 -0.5813  \
+ UserInfo_16_encoding_WOE       -0.8412   0.1008   -8.3429 0.0000 -1.0388 -0.6436  \
+ WeblogInfo_4_WOE               -0.5158   0.0892   -5.7820 0.0000 -0.6906 -0.3409  \
+ ThirdParty_Info_Period2_8_WOE  -0.4911   0.0968   -5.0707 0.0000 -0.6809 -0.3012  \
+ UserInfo_7_encoding_WOE        -0.9457   0.0908  -10.4125 0.0000 -1.1237 -0.7677  \
+ WeblogInfo_20_encoding_WOE     -0.7111   0.0891   -7.9834 0.0000 -0.8857 -0.5366  \
+ UserInfo_17_WOE                -0.8104   0.1203   -6.7389 0.0000 -1.0461 -0.5747  \
+ ThirdParty_Info_Period1_10_WOE -0.8455   0.1328   -6.3677 0.0000 -1.1057 -0.5852  \
+ ThirdParty_Info_Period2_10_WOE -0.4202   0.1387   -3.0296 0.0024 -0.6921 -0.1484  \
+ WeblogInfo_2_encoding_WOE      -0.5756   0.1175   -4.9003 0.0000 -0.8059 -0.3454  \
+ LogInfo1_30_avg_count_WOE      -0.4488   0.1350   -3.3246 0.0009 -0.7133 -0.1842  \
+ UserInfo_12_WOE                -0.5003   0.1724   -2.9028 0.0037 -0.8381 -0.1625  \
+ intercept                      -2.5354   0.0241 -105.0176 0.0000 -2.5828 -2.4881
 
  
 
@@ -175,7 +211,7 @@ The AUC: 0.72
 A.The different methods of deriving features from data can have a significant impact on the results.  
 B. There are other better ways to derive features. In the modeling processing, features such as the number and frequency of operations within different time slicing are mainly derived from the applicant's information, logging in, and other operations. However, on the contrary, such as income, education, those information we believe to have more important impact on the judgement of whether an applicant will default were not be mentioned. So how to increase those important data is very import step to improve the accuracy of the model.   
 
-# Section 8 Studying on how to improve the credit card risk control in business by the result of this model  
+# Section 8 how to improve the credit card risk control in business by the result of this model  
 A. Focus on features with high importance to the model.  
 B. Pay attention to the changes of these important features in each customer throughout the entire credit card life cycle, including the application stage, normal transaction stage, and re-judge stage. Specifically, the credit card center in the bank can label each customer based on these features and track these feature of each customer in the entire credit card life style.
 
