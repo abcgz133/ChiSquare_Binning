@@ -137,42 +137,41 @@ If YES, then append this tested feature to a list named 'select_var’, if No, t
 
 The features in this list are the final features that can be finally to fit the logistic regression model. The training samples are then trained to fit the logistic regression model.
 
-The results are as follows:   
-LR.summary2() = {Summary}                                  \
-Results: 
- Logit  ====================================================  
- Model:                    Logit                Pseudo R-squared:     0.091  \
- Dependent feature:       target                AIC:                  14335.7179  \
- Date:                     2020-07-16 16:14     BIC:                  14493.5880  \
- No. Observations:         30000                Log-Likelihood:       -7148.9  \
- Df Model:                 18                   LL-Null:              -7860.2  \
- Df Residuals:             29981                LLR p-value:          1.8512e-291  \
- Converged:                1.0000               Scale:                1.0000  \
- No. Iterations:           8.0000  \
- --------------------------------------------------------------------------------\
-					Coef.	Std.Err.	z			P>|z|		[0.025  0.975]  \
- --------------------------------------------------------------------------------\
- ThirdParty_Info_Period2_6_WOE  -0.3344   0.0846   -3.9548 0.0001 -0.5001 -0.1687  \
- ThirdParty_Info_Period6_6_WOE  -0.1548   0.0826   -1.8738 0.0610 -0.3166  0.0071  \
- ThirdParty_Info_Period5_6_WOE  -0.1585   0.0808   -1.9607 0.0499 -0.3169 -0.0001  \
- UserInfo_14_encoding_WOE       -0.8331   0.0699  -11.9206 0.0000 -0.9701 -0.6961  \
- ThirdParty_Info_Period1_15_WOE -0.3259   0.0849   -3.8387 0.0001 -0.4923 -0.1595  \
- ThirdParty_Info_Period3_15_WOE -0.1573   0.0905   -1.7391 0.0820 -0.3346  0.0200  \
- ThirdParty_Info_Period6_1_WOE  -0.7457   0.0839   -8.8903 0.0000 -0.9102 -0.5813  \
- UserInfo_16_encoding_WOE       -0.8412   0.1008   -8.3429 0.0000 -1.0388 -0.6436  \
- WeblogInfo_4_WOE               -0.5158   0.0892   -5.7820 0.0000 -0.6906 -0.3409  \
- ThirdParty_Info_Period2_8_WOE  -0.4911   0.0968   -5.0707 0.0000 -0.6809 -0.3012  \
- UserInfo_7_encoding_WOE        -0.9457   0.0908  -10.4125 0.0000 -1.1237 -0.7677  \
- WeblogInfo_20_encoding_WOE     -0.7111   0.0891   -7.9834 0.0000 -0.8857 -0.5366  \
- UserInfo_17_WOE                -0.8104   0.1203   -6.7389 0.0000 -1.0461 -0.5747  \
- ThirdParty_Info_Period1_10_WOE -0.8455   0.1328   -6.3677 0.0000 -1.1057 -0.5852  \
- ThirdParty_Info_Period2_10_WOE -0.4202   0.1387   -3.0296 0.0024 -0.6921 -0.1484  \
- WeblogInfo_2_encoding_WOE      -0.5756   0.1175   -4.9003 0.0000 -0.8059 -0.3454  \
- LogInfo1_30_avg_count_WOE      -0.4488   0.1350   -3.3246 0.0009 -0.7133 -0.1842  \
- UserInfo_12_WOE                -0.5003   0.1724   -2.9028 0.0037 -0.8381 -0.1625  \
- intercept                      -2.5354   0.0241 -105.0176 0.0000 -2.5828 -2.4881
-
- 
+The results are as follows:
+```
+                                 Results: Logit
+================================================================================
+Model:                    Logit                Pseudo R-squared:     0.090      
+Dependent Variable:       target               AIC:                  14343.1946 
+Date:                     2023-05-08 10:53     BIC:                  14492.7558 
+No. Observations:         30000                Log-Likelihood:       -7153.6    
+Df Model:                 17                   LL-Null:              -7860.2    
+Df Residuals:             29982                LLR p-value:          2.1653e-290
+Converged:                1.0000               Scale:                1.0000     
+No. Iterations:           8.0000                                                
+--------------------------------------------------------------------------------
+                                Coef.  Std.Err.     z     P>|z|   [0.025  0.975]
+--------------------------------------------------------------------------------
+ThirdParty_Info_Period2_6_WOE  -0.3365   0.0845   -3.9806 0.0001 -0.5021 -0.1708
+ThirdParty_Info_Period6_6_WOE  -0.1520   0.0826   -1.8405 0.0657 -0.3138  0.0099
+ThirdParty_Info_Period5_6_WOE  -0.1596   0.0808   -1.9756 0.0482 -0.3180 -0.0013
+UserInfo_14_encoding_WOE       -0.8311   0.0699  -11.8922 0.0000 -0.9681 -0.6942
+ThirdParty_Info_Period1_15_WOE -0.3201   0.0849   -3.7695 0.0002 -0.4865 -0.1537
+ThirdParty_Info_Period3_15_WOE -0.1551   0.0904   -1.7155 0.0863 -0.3323  0.0221
+ThirdParty_Info_Period6_1_WOE  -0.7511   0.0838   -8.9579 0.0000 -0.9154 -0.5867
+UserInfo_16_encoding_WOE       -0.8410   0.1015   -8.2822 0.0000 -1.0400 -0.6420
+WeblogInfo_4_WOE               -0.6369   0.0842   -7.5641 0.0000 -0.8019 -0.4719
+ThirdParty_Info_Period2_8_WOE  -0.4876   0.0967   -5.0397 0.0000 -0.6772 -0.2979
+UserInfo_7_encoding_WOE        -0.9477   0.0909  -10.4320 0.0000 -1.1258 -0.7697
+WeblogInfo_20_encoding_WOE     -0.7385   0.0887   -8.3261 0.0000 -0.9123 -0.5647
+UserInfo_17_WOE                -0.8146   0.1202   -6.7783 0.0000 -1.0502 -0.5791
+ThirdParty_Info_Period1_10_WOE -0.8349   0.1326   -6.2938 0.0000 -1.0948 -0.5749
+ThirdParty_Info_Period2_10_WOE -0.4266   0.1387   -3.0753 0.0021 -0.6984 -0.1547
+WeblogInfo_2_encoding_WOE      -0.5928   0.1174   -5.0506 0.0000 -0.8229 -0.3628
+UserInfo_12_WOE                -0.5470   0.1721   -3.1777 0.0015 -0.8844 -0.2096
+intercept                      -2.5351   0.0241 -105.0953 0.0000 -2.5824 -2.4878
+================================================================================
+```
 
 # Section 5 probability scaling  
 
