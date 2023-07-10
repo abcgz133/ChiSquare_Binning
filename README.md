@@ -188,7 +188,7 @@ The equation can ensure that:
 (1) When the probability of good to bad decreases by one time, the score increases by one basic unit, that is one PDO.  
 (2) Ensure positive scores  
 
-Case:  
+For example:  
 When a customer's default probability is 20%, the good to bad ratio is 4 (80%/20%), and the score is 200;  
 When a customer's default probability is 11% and the good to bad ratio is 8 (89%/11%), the score is 300 (an increase of 1 PDO);  
 
