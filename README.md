@@ -6,14 +6,14 @@ This model predicts the default probability of the credit card applicant samples
 ## 1.1 Data  
 The data mainly consists of three parts. Part 1 is the applicant's login information, Part 2 is the applicant's own attribute information, including the applicant's Idx, place of residence, third-party information, and default information "target", Part 3 is the applicant's modified information.
  
-## 1.2 The concept of binning
+## 1.2 The concept of Chi-Square(χ2) binning
 This model adopts the data binning technique. This technique categorizes similar samples into one bin. The basis for determining similarity is to calculate the Chi-Square values of two adjacent bins of the samples and their corresponding p-values. The smaller Chi-Square value, the more similarity.
 
-### The benefits of binning technology:
+### The benefits of Chi-square binning technology:
 
 A. The model is stable. Minor changes in sample values do not affect the performance of the model. For example, a slight change in applicant’s income will not affect the predicted score of the sample.
 
-B. Missing value data does not affect scoring. For missing value data, they can be directly categorized in one bin.
+B. Missing value data does not affect the result. For missing value data, they can be directly categorized in one bin.
 
 C. Model can handle the categorical features.
 
@@ -24,7 +24,7 @@ A. Has impact on accuracy rate
 B. If the original feature data has monotonicity, it may not be able to maintain monotonicity after binning. For example, in terms of education, generally speaking, the higher the education , the lower the default rate. So we should keep attention to maintain this monotonicity after binning.
  
 
-## 1.3 Calculating the WOE and IV  
+## 1.3 the WOE and IV calculating   
 (1) After binning, calculate the WOE of each bin to encode the features. WOE measures how much the proportion of good to bad in this bin exceeds the overall good to bad ratio. Namely:
 
 WOE=ln (G1/G/B1/B)=ln (G1/B1/G/B)=(lnG1/B1) - (lnG/B)
@@ -45,15 +45,11 @@ Similarly, time slicing the number of days between the information updated date 
 # Section 3 Data Wrangling 
 ## 3.1 Check the outlier of categorical feature and numerical feature  
 This step is mainly about data filling and checking the concentration ratio of data.  
-(1)Check concentration ratio. Check the proportion of the maximum value in each feature. If the data concentration ratio is greater than 90% and there is no significant difference (i.e. (minority value bad sample rate/maximum value bad sample rate)<=10). This indicates excessive concentration rate. We need to cancel this feature.  
+(1) Check concentration ratio. Check the proportion of the maximum value in each feature. If the data concentration ratio is greater than 90% and there is no significant difference (i.e. (minority value bad sample rate/maximum value bad sample rate)<=10). This indicates excessive concentration rate. We need to cancel this feature.  
 (2) Check for missing values. For categorical or numerical features, if more than 80% are missing, delete them.  
 (3) If the missing value is less than 80%, the category feature will be assigned a value of -1, and the numerical feature will be assigned a random non missing value in this column.  
 
-## 3.2 Check monotonicity(detail at Section 4.4)
 
-## 3.3 Check whether each bin contains both good and bad samples(detail at Section 4.3)
-
-## 3.2 Single-feature and multi-features analysis(detail at Section 4.6)
 
 
 
@@ -66,7 +62,7 @@ This step is mainly about data filling and checking the concentration ratio of d
 (2)After ChiMerge function was finished, check the monotonicity of the bad sample rate of these bins. If monotonicity is not satisfied, merge the bins by the Monotone_Merge function until monotonicity is satisfied.  
 (3)Check if there is the proportion of a single value in each feature exceeding 90%. if yes , then deleting this feature.
 
-## 4.2 For categorical features , there is a slightly difference in binning.
+## 4.2 categorical features and numerical features are processed separately.
 (1) Categorical features with large number of different values were needed to be encoded and converted into numerical features according the bad ratio, and then be processed as the ordinary numerical features binning.  
 (2) Replace the feature name with the original name+  “_Encoding”, and then the feature will be directly be processed in the numerical feature binning.  
 (3) Category features with fewer values do not need to be binned, but it is necessary to check whether the bad sample rate for each categorical value equals to 0  
@@ -188,7 +184,7 @@ The equation can ensure that:
 (1) When the probability of good to bad decreases by one time, the score increases by one basic unit, that is one PDO.  
 (2) Ensure positive scores  
 
-For example:  
+Case:  
 When a customer's default probability is 20%, the good to bad ratio is 4 (80%/20%), and the score is 200;  
 When a customer's default probability is 11% and the good to bad ratio is 8 (89%/11%), the score is 300 (an increase of 1 PDO);  
 
