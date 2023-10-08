@@ -190,12 +190,12 @@ When a customer's default probability is 11% and the good to bad ratio is 8 (89%
 
 
 # Section 6 Evaluating the Model
-The KS ：0.33
+The KS 
  
 
 ![avatar](./graphics/KS.png)  
 
-The AUC: 0.72
+The AUC
  
 
 ![avatar](./graphics/AUC.png)  
@@ -213,17 +213,31 @@ B. Pay attention to the changes of these important features in each customer thr
 # Section 9 Appendix  
 The following image shows the results of the code running on Jupyter Notebook
 
+A. the 1st image:
+
 ![avatar](./graphics/Days_between_login_date_and_listing_date.png)
+
+B. the 2nd image:
 
 ![avatar](./graphics/IV-SORTED.png)
 
+C. the 3rd image:
+
 ![avatar](./graphics/KS.png)
+
+D. the 4th image:
 
 ![avatar](./graphics/Largest_Percentage_of_Single_Value_in_Each_feature.png)
 
+E. the 5th image:
+
 ![avatar](./graphics/log_of_badRate_ratio_in_large_varaibles.png)
 
+F. the 6th image:
+
 ![avatar](./graphics/Score-Distribution.png)
+
+G. the 7th image:
 
 ![avatar](./graphics/AUC.png)
 
