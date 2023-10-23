@@ -71,7 +71,7 @@ This step is mainly about data filling and checking the concentration ratio of d
 (Note: monotonicity check is not required For categorical features because monotonicity cannot be checked for categorical features.)
 
 ## 4.3 The detail of ChiMerge binning processing:  
-#### (1) Chi-Square function:    
+#### (1) ChiMerge function:    
 ![avatar](./graphics/ChiMerge_function.png)
 
 A. Group and sort the values in the feature.  
@@ -80,7 +80,7 @@ C. Find the minimum Chi-Square value. Assuming that the merged Chi-Square value 
 D. Continuing merge until the generated number of new bins is less than or equal to 5, then can end the processing.  
 
 #### (2) Merging the Zero_Bad_Sample_rate function：    
-Check whether each bin contains both good and bad samples     
+Check whether each bin contains both good and bad samples (note: only being processed in numerical feature)  
 ![avatar](./graphics/Merging_the_Zero_Bad_Sample_Rate_function.png) 
 
 A. If the bin is found that there are only good or bad samples, it is necessary to merge with adjacent bin.  
@@ -191,16 +191,17 @@ When a customer's default probability is 11% and the good to bad ratio is 8 (89%
 
 # Section 6 Evaluating the Model
 The KS 
+KS can tell the ability of differentiation  of the model. Usually KS is required: >=30%
  
 
 ![avatar](./graphics/KS.png)  
 
 The AUC
- 
+The AUC can tell the ability of prediction. Usually AUC is required: >=70%
 
 ![avatar](./graphics/AUC.png)  
 
- 
+at last , the PSI can tell the stability of the model. Usually PSI is required: <= 0.25
 
 # Section 7 Areas to be improved in this model  
 A.The different methods of deriving features from data can have a significant impact on the results.  
