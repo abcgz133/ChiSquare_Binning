@@ -1,6 +1,6 @@
 ![avatar](./graphics/ChiMerge_Methodology.png)
 # Section 1 Preface    
-This model predicts the default probability of the credit card applicant samples by using Chi-Square Binning with Logistic Regression Algorithm. Furthermore the system then scores the applicant samples bases on their probability.
+This model predicts the delinquency probability of the credit card applicant samples by using Chi-Square Binning with Logistic Regression Algorithm. Furthermore the system then scores the applicant samples bases on their probability.
 
 
 ## 1.1 Data  
@@ -24,7 +24,7 @@ A. Has impact on accuracy rate
 B. If the original feature data has monotonicity, it may not be able to maintain monotonicity after binning. For example, in terms of education, generally speaking, the higher the education , the lower the default rate. So we should keep attention to maintain this monotonicity after binning.
  
 
-## 1.3 the WOE and IV calculating   
+## 1.3 The WOE and IV calculating   
 (1) After binning, calculate the WOE of each bin to encode the features. WOE measures how much the proportion of good to bad in this bin exceeds the overall good to bad ratio. Namely:
 
 WOE=ln (G1/G/B1/B)=ln (G1/B1/G/B)=(lnG1/B1) - (lnG/B)
@@ -62,7 +62,7 @@ This step is mainly about data filling and checking the concentration ratio of d
 (2)After ChiMerge function was finished, check the monotonicity of the bad sample rate of these bins. If monotonicity is not satisfied, merge the bins by the Monotone_Merge function until monotonicity is satisfied.  
 (3)Check if there is the proportion of a single value in each feature exceeding 90%. if yes , then deleting this feature.
 
-## 4.2 categorical features and numerical features are processed separately.
+## 4.2 Categorical features and numerical features are processed separately.
 (1) Categorical features with large number of different values were needed to be encoded and converted into numerical features according the bad ratio, and then be processed as the ordinary numerical features binning.  
 (2) Replace the feature name with the original name+  “_Encoding”, and then the feature will be directly be processed in the numerical feature binning.  
 (3) Category features with fewer values do not need to be binned, but it is necessary to check whether the bad sample rate for each categorical value equals to 0  
@@ -169,13 +169,13 @@ intercept                      -2.5351   0.0241 -105.0953 0.0000 -2.5824 -2.4878
 ================================================================================
 ```
 
-# Section 5 probability scaling  
+# Section 5 Probability scaling  
 
-This step converts the default probability of each sample into the corresponding score.
+This step converts the delinquency probability of each sample into the corresponding score.
 Equation 
 Score of person = base score + PDO * (- y)/ln (2)
 Where:
-p- Probability of customer default
+p- Probability of customer delinquency
 y=- log (p/(1-p))
 
 PDO: Point to Double odds. It means when the good to bad ratio increases by 1 time, the score increases by one PDO unit
@@ -185,8 +185,8 @@ The equation can ensure that:
 (2) Ensure positive scores  
 
 Case:  
-When a customer's default probability is 20%, the good to bad ratio is 4 (80%/20%), and the score is 200;  
-When a customer's default probability is 11% and the good to bad ratio is 8 (89%/11%), the score is 300 (an increase of 1 PDO);  
+When a customer's delinquency probability is 20%, the good to bad ratio is 4 (80%/20%), and the score is 200;  
+When a customer's delinquency probability is 11% and the good to bad ratio is 8 (89%/11%), the score is 300 (an increase of 1 PDO);  
 
 
 # Section 6 Evaluating the Model
@@ -205,40 +205,42 @@ at last , the PSI can tell the stability of the model. Usually PSI is required: 
 
 # Section 7 Areas to be improved in this model  
 A.The different methods of deriving features from data can have a significant impact on the results.  
-B. There are other better ways to derive features. In the modeling processing, features such as the number and frequency of operations within different time slicing are mainly derived from the applicant's information, logging in, and other operations. However, on the contrary, such as income, education, those information we believe to have more important impact on the judgement of whether an applicant will default were not be mentioned. So how to increase those important data is very import step to improve the accuracy of the model.   
+B. There are other better ways to derive features. In the modeling processing, features such as the number and frequency of operations within different time slicing are mainly derived from the applicant's information, logging in, and other operations. However, on the contrary, such as income, education, those information we believe to have more important impact on the judgement of whether an applicant will be delinquent were not be mentioned. So how to increase those important data is very import step to improve the accuracy of the model.   
+C. Although there are so many procedures to create the model, the original model had a bug which did not split the data into testing data and training data. The following version has fixed this bug. 
 
-# Section 8 how to improve the credit card risk control in business by the result of this model  
+# Section 8 How to improve the credit card risk control in business by the result of this model  
 A. Focus on features with high importance to the model.  
-B. Pay attention to the changes of these important features in each customer throughout the entire credit card life cycle, including the application stage, normal transaction stage, and re-judge stage. Specifically, the credit card center in the bank can label each customer based on these features and track these feature of each customer in the entire credit card life style.
+B. Pay attention to the changes of these important features in each customer throughout the entire credit card life cycle, including the application stage, normal transaction stage, and re-judge stage. Specifically, the credit card center in the bank can label each customer based on these features and track these feature of each customer in the entire credit card life style.  
+C. Beyond the technology, sometimes we also pay attention to common sense, such as the affection from the economy development cycle.
 
 # Section 9 Appendix  
 The following image shows the results of the code running on Jupyter Notebook
 
-A. the 1st image:
+A. The 1st image:
 
 ![avatar](./graphics/Days_between_login_date_and_listing_date.png)
 
-B. the 2nd image:
+B. The 2nd image:
 
 ![avatar](./graphics/IV-SORTED.png)
 
-C. the 3rd image:
+C. The 3rd image:
 
 ![avatar](./graphics/KS.png)
 
-D. the 4th image:
+D. The 4th image:
 
 ![avatar](./graphics/Largest_Percentage_of_Single_Value_in_Each_feature.png)
 
-E. the 5th image:
+E. The 5th image:
 
 ![avatar](./graphics/log_of_badRate_ratio_in_large_varaibles.png)
 
-F. the 6th image:
+F. The 6th image:
 
 ![avatar](./graphics/Score-Distribution.png)
 
-G. the 7th image:
+G. The 7th image:
 
 ![avatar](./graphics/AUC.png)
 
