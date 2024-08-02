@@ -1,36 +1,36 @@
 ![avatar](./graphics/ChiMerge_Methodology.png)
 # Section 1 Preface    
-This model predicts the delinquency probability of the credit card applicant samples by using Chi-Square Binning with Logistic Regression Algorithm. Furthermore the system then scores the applicant samples bases on their probability.
+This model predicts the delinquency probability of the credit card user by using Chi-Square Binning with Logistic Regression Algorithm. Furthermore the system then scores the user bases on their probability.
 
 
 ## 1.1 Data  
-The data mainly consists of three parts. Part 1 is the applicant's login information, Part 2 is the applicant's own attribute information, including the applicant's Idx, place of residence, third-party information, and default information "target", Part 3 is the applicant's modified information.
+The data mainly consists of three parts. Part 1 is the credit card user's login information, Part 2 is the user's own attribute information, including the user's Idx, place of residence, third-party information, and delinquency information "target", Part 3 is the user's modified information.
  
 ## 1.2 The concept of Chi-Square(χ2) binning
-This model adopts the data binning technique. This technique categorizes similar samples into one bin. The basis for determining similarity is to calculate the Chi-Square values of two adjacent bins of the samples and their corresponding p-values. The smaller Chi-Square value, the more similarity.
+This model adopts the data binning technique. This technique categorizes similar feature of credit card users into one bin. The basis for determining similarity is to calculate the Chi-Square values of two adjacent bins of the users and their corresponding p-values. The smaller Chi-Square value, the more similarity.
 
 ### The benefits of Chi-square binning technology:
 
-A. The model is stable. Minor changes in sample values do not affect the performance of the model. For example, a slight change in applicant’s income will not affect the predicted score of the sample.
+A. The model is stable. Minor changes in user values do not affect the performance of the model. For example, a slight change in user’s income will not affect the predicted score of the user.
 
 B. Missing value data does not affect the result. For missing value data, they can be directly categorized in one bin.
 
 C. Model can handle the categorical features.
 
-D. Reducing the number of features. For example, according to one-hot method, the original feature of “province” which was designed to indicate the resident province of the applicants, will be converted into more than 30 features. However, with binning, several provinces with similar bad sample rates can be merged into one bin for processing, thereby reducing the number of features.
+D. Reducing the number of features. For example, according to one-hot method, the original feature of “province” which was designed to indicate the resident province of the users, will be converted into more than 30 features. However, with binning, several provinces with similar bad user rates can be merged into one bin for processing, thereby reducing the number of features.
 
 ### Disadvantages:  
 A. Has impact on accuracy rate  
-B. If the original feature data has monotonicity, it may not be able to maintain monotonicity after binning. For example, in terms of education, generally speaking, the higher the education , the lower the default rate. So we should keep attention to maintain this monotonicity after binning.
+B. If the original feature data has monotonicity, it may not be able to maintain monotonicity after binning. For example, in terms of education, generally speaking, the higher the education , the lower the delinquency rate. So we should keep attention to maintain this monotonicity after binning.
  
 
 ## 1.3 The WOE and IV calculating   
-(1) After binning, calculate the WOE of each bin to encode the features. WOE measures how much the proportion of good to bad in this bin exceeds the overall good to bad ratio. Namely:
+(1) After binning, calculate the WOE of each bin to encode the features. WOE(Weight of Evidence) measures how much the proportion of good to bad in this bin exceeds the overall good to bad ratio. Namely:
 
 WOE=ln (G1/G/B1/B)=ln (G1/B1/G/B)=(lnG1/B1) - (lnG/B)
-If WOE >0, it indicates that the bad sample rate of the bin is lower than the average bad sample rate of the entire sample (that is, ln(G1/B1) is greater than ln(G/B))
+If WOE >0, it indicates that the bad user rate of the bin is lower than the average bad user rate of the entire user (that is, ln(G1/B1) is greater than ln(G/B))
 
-(2) In addition to calculating WOE, it is also necessary to calculate the IV value. The IV value measures the importance of features.
+(2) In addition to calculating WOE, it is also necessary to calculate the IV(Information Value) value. The IV value measures the importance of features.
 
 IV = (G1/G - B1/B) * WOE
  
@@ -45,7 +45,7 @@ Similarly, time slicing the number of days between the information updated date 
 # Section 3 Data Wrangling 
 ## 3.1 Check the outlier of categorical feature and numerical feature  
 This step is mainly about data filling and checking the concentration ratio of data.  
-(1) Check concentration ratio. Check the proportion of the maximum value in each feature. If the data concentration ratio is greater than 90% and there is no significant difference (i.e. (minority value bad sample rate/maximum value bad sample rate)<=10). This indicates excessive concentration rate. We need to cancel this feature.  
+(1) Check concentration ratio. Check the proportion of the maximum value in each feature. If the data concentration ratio is greater than 90% and there is no significant difference (i.e. (minority value bad user rate/maximum value bad user rate)<=10). This indicates excessive concentration rate. We need to cancel this feature.  
 (2) Check for missing values. For categorical or numerical features, if more than 80% are missing, delete them.  
 (3) If the missing value is less than 80%, the category feature will be assigned a value of -1, and the numerical feature will be assigned a random non missing value in this column.  
 
@@ -59,14 +59,14 @@ This step is mainly about data filling and checking the concentration ratio of d
 ![avatar](./graphics/ChiMerge_Flow_chart.png)
 
 (1)Binning by function called ChiMerge  
-(2)After ChiMerge function was finished, check the monotonicity of the bad sample rate of these bins. If monotonicity is not satisfied, merge the bins by the Monotone_Merge function until monotonicity is satisfied.  
+(2)After ChiMerge function was finished, check the monotonicity of the bad user rate of these bins. If monotonicity is not satisfied, merge the bins by the Monotone_Merge function until monotonicity is satisfied.  
 (3)Check if there is the proportion of a single value in each feature exceeding 90%. if yes , then deleting this feature.
 
 ## 4.2 Categorical features and numerical features are processed separately.
 (1) Categorical features with large number of different values were needed to be encoded and converted into numerical features according the bad ratio, and then be processed as the ordinary numerical features binning.  
-(2) Replace the feature name with the original name+  “_Encoding”, and then the feature will be directly be processed in the numerical feature binning.  
-(3) Category features with fewer values do not need to be binned, but it is necessary to check whether the bad sample rate for each categorical value equals to 0  
-(4) If the bad sample rate equals to 0, merged with the bin which has the lowest bad sample rate by the function called MergeBad0. After the processing, the feature name needs to be replaced with: original name+"_mergeByBadRate"  
+(2) Replace the feature name with the original name+  "_Encoding", and then the feature will be directly be processed in the numerical feature binning.  
+(3) Category features with fewer values do not need to be binned, but it is necessary to check whether the bad user rate for each categorical value equals to 0  
+(4) If the bad user rate equals to 0, merged with the bin which has the lowest bad user rate by the function called MergeBad0. After the processing, the feature name needs to be replaced with: original name+"_mergeByBadRate"  
 (5)Check if there is the proportion of a single value in each feature exceeding 90%. if yes , then deleting this feature.  
 (Note: monotonicity check is not required For categorical features because monotonicity cannot be checked for categorical features.)
 
@@ -80,11 +80,11 @@ C. Find the minimum Chi-Square value. Assuming that the merged Chi-Square value 
 D. Continuing merge until the generated number of new bins is less than or equal to 5, then can end the processing.  
 
 #### (2) Merging the Zero_Bad_Sample_rate function：    
-Check whether each bin contains both good and bad samples (note: only being processed in numerical feature)  
+Check whether each bin contains both good and bad users (note: only being processed in numerical feature)  
 ![avatar](./graphics/Merging_the_Zero_Bad_Sample_Rate_function.png) 
 
-A. If the bin is found that there are only good or bad samples, it is necessary to merge with adjacent bin.  
-B. If it is the first or last bin has the only good or bad samples, it is simple and can be merged with adjacent bin.    
+A. If the bin is found that there are only good or bad users, it is necessary to merge with adjacent bin.  
+B. If it is the first or last bin has the only good or bad users, it is simple and can be merged with adjacent bin.    
 C. If the bin is in the middle, it is necessary to calculate the chi-square with the left or right bin separately, later to select the smallest Chi-Square value binning scheme. Then to judge whether the situation of only good or bad has been eliminated. If yes, then end the loop. If no, then continue the loop.  
 
 
@@ -95,9 +95,9 @@ flow chart:
 ![avatar](./graphics/monotonicity_function.png) 
 
 How to judge whether it is not monotonous?   
-If it is not monotonous, it is generally because the bad sample rate in a certain bin is higher or lower than the bad sample rate of the front and rear bins. At this time, it can be merged with the front bin or with the rear bin. Which bin is the best to be merged with? Which bin can be merged so that this action can eliminate the situation of non-monotonicity and the binning shows more evenly?  
+If it is not monotonous, it is generally because the bad user rate in a certain bin is higher or lower than the bad user rate of the front and rear bins. At this time, it can be merged with the front bin or with the rear bin. Which bin is the best to be merged with? Which bin can be merged so that this action can eliminate the situation of non-monotonicity and the binning shows more evenly?  
 
-Moreover, in the case of non-monotonicity , it is usually more than one bin shows non-monotonic. This means that there are several bins in the whole features , the bad sample rate of these bins is higher or lower than that of their front and rear bins.
+Moreover, in the case of non-monotonicity , it is usually more than one bin shows non-monotonic. This means that there are several bins in the whole features , the bad user rate of these bins is higher or lower than that of their front and rear bins.
 
 The purpose of this program is to select the best solution for bin merging in this situation. The steps are as follows:  
 (1) If the number of non-monotonicity bins is greater than or equal to 2, for each non-monotonicity bin, for example, the i-th bin, the function attempts to merge it with adjacent front and real bins separately, and call the sub-function(named “Merge_ adjacent_Rows”) to determine whether this i-th bin is merged with the front or rear bin better. After finishing, the new bins are required to be monotonous and be more balancing.  
@@ -111,7 +111,7 @@ where:
 var_ Cutoff: The corresponding cutting point for each bin  
 var_ WOE: After binning, the corresponding WOE value for each bin  
 var_ IV: IV value of each feature    
-(2) for the categorical feature, the function will output a new feature which will be named: name of the original feature + “_ Encoding”  according to this feature’s bad sample rate.  
+(2) for the categorical feature, the function will output a new feature which will be named: name of the original feature + "_ Encoding"  according to this feature’s bad user rate.  
 
 ## 4.6 Single-feature and multi-features analysis 
 Firstly,  remove those features with smaller IV values.
@@ -131,7 +131,7 @@ Therefore, to ensure the model meets business requirement, we should firstly sor
 
 If YES, then append this tested feature to a list named 'select_var’, if No, then delete this feature. As a result, in the end of this processing all features in this list can be ensured to have sufficient significance and positive coefficients. 
 
-The features in this list are the final features that can be finally to fit the logistic regression model. The training samples are then trained to fit the logistic regression model.
+The features in this list are the final features that can be finally to fit the logistic regression model. The training users are then trained to fit the logistic regression model.
 
 The results are as follows:
 ```
@@ -171,7 +171,7 @@ intercept                      -2.5351   0.0241 -105.0953 0.0000 -2.5824 -2.4878
 
 # Section 5 Probability scaling  
 
-This step converts the delinquency probability of each sample into the corresponding score.
+This step converts the delinquency probability of each user into the corresponding score.
 Equation 
 Score of person = base score + PDO * (- y)/ln (2)
 Where:
@@ -205,7 +205,7 @@ at last , the PSI can tell the stability of the model. Usually PSI is required: 
 
 # Section 7 Areas to be improved in this model  
 A.The different methods of deriving features from data can have a significant impact on the results.  
-B. There are other better ways to derive features. In the modeling processing, features such as the number and frequency of operations within different time slicing are mainly derived from the applicant's information, logging in, and other operations. However, on the contrary, such as income, education, those information we believe to have more important impact on the judgement of whether an applicant will be delinquent were not be mentioned. So how to increase those important data is very import step to improve the accuracy of the model.   
+B. There are other better ways to derive features. In the modeling processing, features such as the number and frequency of operations within different time slicing are mainly derived from the credit card user's information, logging in, and other operations. However, on the contrary, such as income, education, those information we believe to have more important impact on the judgement of whether an user will be delinquent were not be mentioned. So how to increase those user data is very import step to improve the accuracy of the model.   
 C. Although there are so many procedures to create the model, the original model had a bug which did not split the data into testing data and training data. The following version has fixed this bug. 
 
 # Section 8 How to improve the credit card risk control in business by the result of this model  
