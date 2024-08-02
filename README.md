@@ -1,6 +1,6 @@
 ![avatar](./graphics/ChiMerge_Methodology.png)
 # Section 1 Preface    
-This model predicts the delinquency probability of the credit card user by using Chi-Square Binning with Logistic Regression Algorithm. Furthermore the system then scores the user bases on their probability.
+This model predicts the delinquency probability of the credit card users by applying Chi-Square Binning method with Logistic Regression(Machine Learning) Algorithm. Furthermore the system converts the probability into so called "credit score".
 
 
 ## 1.1 Data  
@@ -28,7 +28,7 @@ B. If the original feature data has monotonicity, it may not be able to maintain
 (1) After binning, calculate the WOE of each bin to encode the features. WOE(Weight of Evidence) measures how much the proportion of good to bad in this bin exceeds the overall good to bad ratio. Namely:
 
 WOE=ln (G1/G/B1/B)=ln (G1/B1/G/B)=(lnG1/B1) - (lnG/B)
-If WOE >0, it indicates that the bad user rate of the bin is lower than the average bad user rate of the entire user (that is, ln(G1/B1) is greater than ln(G/B))
+If WOE >0, it indicates that the bad user rate of the bin is lower than the average bad user rate of the entire users (that is, ln(G1/B1) is greater than ln(G/B))
 
 (2) In addition to calculating WOE, it is also necessary to calculate the IV(Information Value) value. The IV value measures the importance of features.
 
