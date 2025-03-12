@@ -213,7 +213,37 @@ A. Focus on features with high importance to the model.
 B. Pay attention to the changes of these important features in each customer throughout the entire credit card life cycle, including the application stage, normal transaction stage, and re-judge stage. Specifically, the credit card center in the bank can label each customer based on these features and track these feature of each customer in the entire credit card life style.  
 C. Beyond the technology, sometimes we also pay attention to common sense, such as the affection from the economy development cycle.
 
-# Section 9 Appendix  
+# Section 9 Models Comparing
+## 9.1 Ensemble learning ---bagging
+![avatar](./graphics/AUC_KS_bagging.png)  
+
+## 9.2 Ensemble learning ---Stacking
+![avatar](./graphics/AUC_KS_Stacking.png)  
+
+## 9.3 Ensemble learning ---Boosting
+![avatar](./graphics/AUC_KS_Boosting.png)  
+
+
+## 9.4 Advantages and Disadvantages of those models:  
+Through our case study, here is the performance of different models:
+
+### 9.4.1 Logistic Regression:
+AUC and KS values: Performs well on simple linearly separable problems but poorly on complex datasets. Variance and Bias: High bias, low variance. Generalization Ability: Good, but requires regularization and feature engineering to improve performance. Explainability: Very high, suitable for scenarios where interpretability of results is crucial.
+
+### 9.4.2 Bagging:
+Bagging: AUC and KS values: Significantly higher than a single logistic regression model. Variance and Bias: Significantly reduces variance while keeping bias unchanged. Generalization Ability: Improved, especially for high-variance base learners like decision trees. Explainability: Moderate; random forests can be explained through feature importance analysis.
+
+### 9.4.3 Boosting: 
+Boosting (e.g., AdaBoost or XGBoost): AUC and KS values: Better than a single logistic regression model and typically performs very well on complex datasets, significantly improving AUC and KS values. Variance and Bias: Significantly reduces bias but may increase variance, requiring regularization techniques to control. Generalization Ability: Improved, but care must be taken to prevent overfitting. Explainability: Moderate; can be explained through feature importance analysis but is less intuitive than logistic regression.
+
+### 9.4.4 Stacking 
+Stacking: AUC and KS values: Typically leverages the strengths of multiple models to improve AUC and KS values beyond those of a single logistic regression model. Variance and Bias: Depends on the choice of base learners and meta-learner, requiring careful design to avoid overfitting. Generalization Ability: Improved, but care must be taken to prevent overfitting. Explainability: Moderate; depends on the base learners and meta-learner, potentially less intuitive than a single model.
+
+### 9.4.5 Summary 
+Summary: Logistic Regression: Suitable for simple linear problems with high explainability but limited performance on complex datasets. Bagging: Reduces variance to improve model stability, suitable for high-variance models like decision trees. Boosting: Reduces bias to enhance model performance, ideal for complex datasets but requires attention to prevent overfitting. Stacking: Utilizes multi-level learning to combine the strengths of multiple models, suitable for scenarios requiring a combination of various model advantages, but requires careful design to avoid overfitting.
+ 
+
+# Section 10 Appendix  
 The following image shows the results of the code running on Jupyter Notebook
 
 A. The 1st image:
