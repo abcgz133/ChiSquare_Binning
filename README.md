@@ -218,7 +218,15 @@ C. Beyond the technology, sometimes we also pay attention to common sense, such 
 ![avatar](./graphics/AUC_KS_bagging.png)  
 
 ## 9.2 Ensemble learning ---Stacking
-![avatar](./graphics/AUC_KS_Stacking.png)  
+### 9.2.1 tier1--XGBoosting
+![avatar](./graphics/AUC_KS_Stacking_XGB.png) 
+
+### 9.2.2 tier1---ANN
+![avatar](./graphics/AUC_KS_Stacking_ANN.png) 
+
+
+### 9.2.3 tier2---LR
+![avatar](./graphics/AUC_KS_Stacking_LR.png) 
 
 ## 9.3 Ensemble learning ---Boosting
 ![avatar](./graphics/AUC_KS_Boosting.png)  
